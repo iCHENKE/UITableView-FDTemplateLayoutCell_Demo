@@ -102,6 +102,7 @@
 }
 
 - (void)setModelOfCell:(MyCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    
     cell.model = listData[indexPath.row];
 }
 

@@ -12,15 +12,6 @@
 
 @interface MyCell ()
 
-@property (strong, nonatomic) UIView *baseView;
-@property (strong, nonatomic) UILabel *timeLabel;
-@property (strong, nonatomic) UILabel *placeStrLabel;
-@property (strong, nonatomic) UILabel *placeLabel;
-@property (strong, nonatomic) UILabel *statusLabel;
-@property (strong, nonatomic) UILabel *typeLabel;
-@property (strong, nonatomic) UILabel *reasonStrLabel;
-@property (strong, nonatomic) UILabel *reasonLabel;
-
 @end
 
 @implementation MyCell
@@ -122,7 +113,7 @@
     }];
     
     [_placeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_timeLabel.mas_bottom).offset(10);
+        make.top.equalTo(_placeStrLabel.mas_top);
         make.left.equalTo(_placeStrLabel.mas_right).offset(0);
         make.right.mas_offset(-10);
     }];
@@ -141,19 +132,21 @@
         make.right.mas_offset(-10);
     }];
     
-    
+    _reasonStrConstraint = [NSLayoutConstraint constraintWithItem:_reasonStrLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_typeLabel attribute:NSLayoutAttributeBottom multiplier:1 constant:10];
     [_reasonStrLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_typeLabel.mas_bottom).offset(10);
+        //make.top.equalTo(_typeLabel.mas_bottom).offset(10);
         make.left.mas_offset(10);
         make.width.mas_equalTo(45);
     }];
     
     [_reasonLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_typeLabel.mas_bottom).offset(10);
+        make.top.equalTo(_reasonStrLabel.mas_top);
         make.left.equalTo(_reasonStrLabel.mas_right).offset(0);
         make.right.mas_offset(-10);
         make.bottom.mas_offset(-10);
     }];
+    
+    [self.contentView addConstraints:[NSArray arrayWithObjects:_reasonStrConstraint, nil]];
 }
 
 - (void)setModel:(MyModel *)model {
@@ -169,10 +162,12 @@
     
     if ([model.contentDict[@"reason"] length] > 0) {
         
+        _reasonStrConstraint.constant = 10;
         _reasonStrLabel.text = @"原因";
         _reasonLabel.text = model.contentDict[@"reason"];
     } else {
         
+        _reasonStrConstraint.constant = 0;
         _reasonStrLabel.text = nil;
         _reasonLabel.text = nil;
     }

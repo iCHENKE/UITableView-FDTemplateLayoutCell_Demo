@@ -12,6 +12,16 @@
 
 @interface MyCell : UITableViewCell
 
+@property (strong, nonatomic) UIView *baseView;
+@property (strong, nonatomic) UILabel *timeLabel;
+@property (strong, nonatomic) UILabel *placeStrLabel;
+@property (strong, nonatomic) UILabel *placeLabel;
+@property (strong, nonatomic) UILabel *statusLabel;
+@property (strong, nonatomic) UILabel *typeLabel;
+@property (strong, nonatomic) UILabel *reasonStrLabel;
+@property (strong, nonatomic) UILabel *reasonLabel;
+@property (weak, nonatomic) NSLayoutConstraint *reasonStrConstraint;
+
 - (void)setModel:(MyModel *)model;
 
 @end
